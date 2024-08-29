@@ -4,7 +4,11 @@
 
 This repository contains a refactored and modularized version of the original project developed in a Jupyter Notebook. The objective is to conduct a comprehensive analysis of the Airbnb dataset for Rio de Janeiro, and to develop an interactive application that will assist travelers in finding their ideal accommodation.
 
+## 🚧 Project Status
+
 **This project is currently under active development.** Some features may not be fully implemented, and the system might undergo significant changes as improvements are made. Please feel free to explore, provide feedback, or contribute!
+
+ ![Banner](https://images.adsttc.com/media/images/6449/6c61/2def/3401/7a85/1139/slideshow/a-historia-do-calcadao-de-copacabana_3.jpg?1682533486)
 
 ## Objective
 
