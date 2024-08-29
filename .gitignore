@@ -138,6 +138,7 @@ venv.bak/
 # mkdocs documentation
 /site
 .mynotes.txt
+explore_data.py
 
 # mypy
 .mypy_cache/

@@ -29,10 +29,23 @@ The dataset for Rio de Janeiro includes comprehensive information about the avai
 
 ## Project Structure
 
-- `data/`: Contains the raw data.
-- `notebooks/`: Contains the original notebooks.
-- `src/`: Contains Python modules with functions for data processing, feature engineering, modeling, and visualization.
+- `data/`: Contains all data-related files and directories.
+  - `raw/`: Contains the raw, unprocessed data files.
+  - `processed/`: Contains the processed data files after cleaning and other preprocessing steps.
+  - `intermediate/`: Contains data files that are in intermediate stages of processing.
+- `notebooks/`: Contains the original Jupyter notebooks.
+- `src/`: Contains Python modules with functions for data processing, exploratory data analysis (EDA), feature engineering, modeling, and visualization.
+  - `data_preprocessing.py`: Functions for loading and cleaning data.
+  - `EDA.py`: Functions for exploratory data analysis.
+  - `feature_engineering.py`: Functions for creating and transforming features.
+  - `model_training.py`: Functions for model training and evaluation.
+  - `visualization.py`: Functions for creating visualizations.
 - `tests/`: Contains unit tests for the modules.
+- `env/`: Contains the virtual environment for the project.
+- `main.py`: The main script to orchestrate the execution of the project's workflow.
+- `requirements.txt`: Lists the dependencies required for the project.
+- `setup.py`: Configuration file for packaging the project.
+
 
 ## Tasks Breakdown
 
