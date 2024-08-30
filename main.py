@@ -1,6 +1,6 @@
 from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
-from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram
+from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram, create_tourist_map
 from src.data_cleaning import remove_zero_price, handle_outliers, test_normality
 from src.feature_engineering import perform_feature_engineering
 
@@ -75,6 +75,11 @@ def main():
     df_engineered.to_csv('data/processed/engineered_listing.csv', index=False)
     
     print("Feature engineering completed and saved in 'data/processed/'.")
+
+    # Crear y guardar el mapa de los lugares turísticos
+    tourist_map = create_tourist_map(df_engineered, max_distance=5)
+
+    print("Tourist map created and saved as 'tourist_map.html'.")
 
 if __name__ == '__main__':
     main()
