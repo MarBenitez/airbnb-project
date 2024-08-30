@@ -76,5 +76,45 @@ def plot_price_by_neighbourhood(df):
                  labels={'x': 'Neighbourhood', 'y': 'Price'})
     fig.show()
 
+def plot_boxplot(df, column, title="Boxplot"):
+    """
+    Plot a boxplot for a given column.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame containing the data.
+        column (str): The column name to plot.
+        title (str): The title of the plot.
+    """
+    fig = px.box(df, y=column, points='all', title=title)
+    fig.show()
+
+def plot_violin(df, x_column, y_column=None, title="Violin Plot"):
+    """
+    Plot a violin plot for the given columns.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame containing the data.
+        x_column (str): The x-axis column name.
+        y_column (str): The y-axis column name (optional).
+        title (str): The title of the plot.
+    """
+    if y_column:
+        fig = px.violin(df, x=x_column, y=y_column, title=title)
+    else:
+        fig = px.violin(df, x=x_column, title=title)
+    fig.show()
+
+def plot_histogram(df, column, title="Histogram"):
+    """
+    Plot a histogram for a given column.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame containing the data.
+        column (str): The column name to plot.
+        title (str): The title of the plot.
+    """
+    fig = px.histogram(df, x=column, title=title)
+    fig.show()
+
 
 # Keep adding functions for more visualizations

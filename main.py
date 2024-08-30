@@ -1,6 +1,7 @@
 from src.data_preprocessing import preprocess_data
-from src.EDA import analyze_missing_values, basic_info
-from src.visualization import plot_variables, plot_price_by_neighbourhood
+from src.EDA import basic_info
+from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram
+from src.data_cleaning import remove_zero_price, handle_outliers, test_normality
 
 
 def main():
@@ -37,6 +38,26 @@ def main():
     
     # Plot price by neighbourhood
     plot_price_by_neighbourhood(data_cleaned['merged_listing'])
+
+    # Cleaned data
+    ## Remove rows where price is zero
+    df = data_cleaned['merged_listing']
+    df = remove_zero_price(df)
+
+    ## Plot before handling outliers
+    plot_boxplot(df, 'price', title='Boxplot of Price Before Outlier Handling')
+
+    ## Handle outliers using IQR
+    df = handle_outliers(df, 'price', method='iqr')
+
+    ## Plot after handling outliers
+    plot_boxplot(df, 'price', title='Boxplot of Price After Outlier Handling')
+
+    # Test normality of price
+    normality_result = test_normality(df, 'price')
+    print('Normality test result:', normality_result)
+
+    print('Data cleaning and EDA completed successfully.')
 
 if __name__ == '__main__':
     main()
