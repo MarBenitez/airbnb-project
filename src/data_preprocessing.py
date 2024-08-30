@@ -84,6 +84,26 @@ def clean_duplicated_rows(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop_duplicates()
     return df
 
+def select_and_prepare_variables(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Select and prepare variables for analysis.
+    
+    Parameters:
+        df (pd.DataFrame): The DataFrame to process.
+    
+    Returns:
+        pd.DataFrame: The processed DataFrame.
+    """
+    # Drop specific columns
+    drop_col = ['host_name', 'host_listings_count', 'reviews_per_month', 'calculated_host_listings_count']
+    df = df.drop(columns=drop_col)
+
+    # Create a new column for the price in a different currency (€)
+    df.insert(1, 'price_R', df['price'].copy())
+    df['price'] = df['price'] * 0.17  # Replace with the current exchange rate
+    
+    return df
+
 def preprocess_data(filepaths: Dict[str, str], save_merged: bool = True) -> Dict[str, pd.DataFrame]:
     """
     Load, clean, and preprocess all necessary data.
@@ -102,6 +122,7 @@ def preprocess_data(filepaths: Dict[str, str], save_merged: bool = True) -> Dict
     
     merged_listing = merge_listings_with_details(data['listing'], data['listing_details'])
     merged_listing = clean_duplicated_rows(merged_listing)
+    merged_listing = select_and_prepare_variables(merged_listing)
     
     if save_merged:
         merged_listing.to_csv('data/intermediate/merged_listing.csv', index=False)
