@@ -20,7 +20,11 @@ def basic_info(df: pd.DataFrame):
     Parameters:
         df (pd.DataFrame): The DataFrame to display information about.
     """
+    print('\nDataframe head:')
     print(df.head(2))
+    print('\nDataframe columns:')
     print(df.columns)
+    print('\nMissing values:')
     print(analyze_missing_values(df))
+    print('\nDataframe info:')
     print(df.dtypes)

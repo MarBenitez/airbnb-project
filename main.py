@@ -23,11 +23,19 @@ def main():
     print("Data preprocessing completed successfully and files saved in 'data/processed/'.")
 
     # Perform EDA
-    analyze_missing_values(data_cleaned['merged_listing'])
     basic_info(data_cleaned['merged_listing'])
 
-    # Generate Visualizations
-    plot_variables(data_cleaned['merged_listing'], 'price')
+    # Define the variables to plot
+    variables_to_plot = [
+        'price', 'accommodates', 'beds', 'room_type',
+        'review_scores_rating', 'minimum_nights', 'maximum_nights', 'host_is_superhost'
+    ]
+    
+    # Generate visualizations for each variable in the list
+    for var in variables_to_plot:
+        plot_variables(data_cleaned['merged_listing'], var)
+    
+    # Plot price by neighbourhood
     plot_price_by_neighbourhood(data_cleaned['merged_listing'])
 
 if __name__ == '__main__':
