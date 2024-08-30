@@ -2,6 +2,7 @@ from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
 from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram
 from src.data_cleaning import remove_zero_price, handle_outliers, test_normality
+from src.feature_engineering import perform_feature_engineering
 
 
 def main():
@@ -30,8 +31,8 @@ def main():
     ]
     
     # Generate visualizations for each variable in the list
-    for var in variables_to_plot:
-        plot_variables(data_cleaned['merged_listing'], var)
+    #for var in variables_to_plot:
+        #plot_variables(data_cleaned['merged_listing'], var)
     
     # Plot price by neighbourhood
     plot_price_by_neighbourhood(data_cleaned['merged_listing'])
@@ -66,6 +67,14 @@ def main():
             print(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
 
     print('Data cleaning and EDA completed successfully.')
+
+    # Feature Engineering
+    df_engineered = perform_feature_engineering(df)
+    
+    # Save the engineered data
+    df_engineered.to_csv('data/processed/engineered_listing.csv', index=False)
+    
+    print("Feature engineering completed and saved in 'data/processed/'.")
 
 if __name__ == '__main__':
     main()
