@@ -125,7 +125,7 @@ def preprocess_data(filepaths: Dict[str, str], save_merged: bool = True) -> Dict
     merged_listing = select_and_prepare_variables(merged_listing)
     
     if save_merged:
-        merged_listing.to_csv('data/intermediate/merged_listing.csv', index=False)
+        merged_listing.to_csv('data/intermediate/merged_listing_prepro.csv', index=False)
     
     data['merged_listing'] = merged_listing
     

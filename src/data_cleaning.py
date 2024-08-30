@@ -60,7 +60,7 @@ def handle_outliers(df: pd.DataFrame, column: str, method: str = 'iqr') -> pd.Da
         method (str): The method to use ('iqr' or 'zscore').
 
     Returns:
-        pd.DataFrame: The DataFrame with outliers handled.
+        pd.DataFrame: The DataFrame with outliers handled (outliers transformed to bounds).
     """
     if method == 'iqr':
         Q1 = df[column].quantile(0.25)

@@ -18,10 +18,7 @@ def main():
     # Preprocess the data and save the merged listing if needed
     data_cleaned = preprocess_data(filepaths, save_merged=True)
     
-    # Save the cleaned data
-    data_cleaned['merged_listing'].to_csv('data/processed/merged_listing_preproc.csv', index=False)
-    
-    print("Data preprocessing completed successfully and files saved in 'data/processed/'.")
+    print("Data preprocessing completed successfully and files saved in 'data/intermediate/'.")
 
     # Perform EDA
     basic_info(data_cleaned['merged_listing'])
@@ -47,15 +44,26 @@ def main():
     ## Plot before handling outliers
     plot_boxplot(df, 'price', title='Boxplot of Price Before Outlier Handling')
 
-    ## Handle outliers using IQR
+    ## Handle 'price' outliers using IQR
     df = handle_outliers(df, 'price', method='iqr')
 
     ## Plot after handling outliers
     plot_boxplot(df, 'price', title='Boxplot of Price After Outlier Handling')
 
-    # Test normality of price
-    normality_result = test_normality(df, 'price')
-    print('Normality test result:', normality_result)
+    # Test normality for each variable after handling outliers
+    print('Normality test results after handling outliers:')
+
+    numeric_vars = df.select_dtypes(include='number').columns
+    for var in numeric_vars:
+        normality_result = test_normality(df, var)
+        print(f'Normality test result for {var}:', normality_result)
+        
+        # Interpret the result
+        alpha = 0.05  # Common threshold for statistical significance
+        if normality_result['Shapiro-Wilk']['p-value'] > alpha:
+            print(f"The variable '{var}' appears to be normally distributed (fail to reject H0).")
+        else:
+            print(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
 
     print('Data cleaning and EDA completed successfully.')
 

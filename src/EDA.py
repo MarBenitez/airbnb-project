@@ -21,7 +21,7 @@ def basic_info(df: pd.DataFrame):
         df (pd.DataFrame): The DataFrame to display information about.
     """
     print('\nDataframe head:')
-    print(df.head(2))
+    print(df.head(5))
     print('\nDataframe columns:')
     print(df.columns)
     print('\nMissing values:')
