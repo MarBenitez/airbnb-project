@@ -120,7 +120,7 @@ def plot_histogram(df, column, title="Histogram"):
 
 
 
-def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
+def create_tourist_map(df, save_path='visualizations/tourist_map2.html'):
     """
     Create an interactive map showing all tourist locations with clustered property markers.
 
@@ -152,9 +152,6 @@ def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
             popup=place["name"],
             icon=folium.Icon(color='blue', prefix='fa', icon=place["icon"])
         ).add_to(map1)
-
-    # Filter properties to reduce the number of points (optional)
-    df = df.sample(frac=0.1)  # Random sample of 10% of the data
 
     # Add clustered property markers to the map
     lats = df['latitude'].tolist()
