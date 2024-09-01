@@ -104,23 +104,3 @@ def remove_outliers(df: pd.DataFrame, columns: list, method: str = 'iqr') -> pd.
             z_scores = zscore(df[column].dropna())
             df = df[(np.abs(z_scores) <= 3)]
     return df
-
-def test_normality(df: pd.DataFrame, column: str):
-    """
-    Test for normality in a column using Shapiro-Wilk and Kolmogorov-Smirnov tests.
-
-    Parameters:
-        df (pd.DataFrame): The DataFrame to test.
-        column (str): The column name to test.
-
-    Returns:
-        dict: A dictionary with the results of the tests.
-    """
-    data = df[column].dropna()
-    shapiro_stat, shapiro_p = shapiro(data)
-    ks_stat, ks_p = kstest(data, 'norm')
-
-    return {
-        'Shapiro-Wilk': {'Statistic': shapiro_stat, 'p-value': shapiro_p},
-        'Kolmogorov-Smirnov': {'Statistic': ks_stat, 'p-value': ks_p}
-    }

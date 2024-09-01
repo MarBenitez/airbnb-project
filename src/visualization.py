@@ -6,6 +6,7 @@ from plotly.subplots import make_subplots
 import folium
 from geopy.distance import geodesic
 from folium.plugins import FastMarkerCluster
+import numpy as np
 
 def map_categories_to_colors(series):
     """
@@ -162,6 +163,48 @@ def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
     # Save the map as an HTML file
     tourist_map.save(save_path)
     print(f"Map saved as {save_path}")
+
+def plot_correlation_matrix(corr_matrix):
+    """
+    Plot the correlation matrix using a heatmap.
+    
+    Parameters:
+    - corr_matrix: Correlation matrix to plot
+    """
+    plt.figure(figsize=(10, 10))
+    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+    sns.heatmap(corr_matrix, mask=mask, cmap='coolwarm', annot=True, fmt=".2f")
+    plt.show()
+
+def plot_correlation_heatmap(corr_matrix):
+    """
+    Plot the correlation matrix using Plotly.
+    
+    Parameters:
+    - corr_matrix: Correlation matrix to plot
+    """
+    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+    masked_corr_matrix = corr_matrix.mask(mask)
+
+    fig = go.Figure(data=go.Heatmap(
+        z=masked_corr_matrix.values,
+        x=masked_corr_matrix.columns,
+        y=masked_corr_matrix.index,
+        colorscale='Viridis',
+        zmin=-1, zmax=1,
+        text=masked_corr_matrix.values,
+        hoverinfo='text'
+    ))
+
+    fig.update_layout(
+        title='Correlation Matrix (Spearman)',
+        xaxis_nticks=len(corr_matrix.columns),
+        yaxis_nticks=len(corr_matrix.index),
+        width=1000,
+        height=1000
+    )
+    
+    fig.show()
 
 
 # Keep adding functions for more visualizations
