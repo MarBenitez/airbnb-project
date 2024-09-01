@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy.stats import kstest
+from scipy.stats import zscore, shapiro, kstest
 from sklearn.preprocessing import LabelEncoder
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -25,34 +25,42 @@ def encode_categorical_columns(df, categorical_columns):
         
     return df_encoded
 
-def test_normality2(df, columns):
+def test_normality(df, columns=None):
     """
-    Test for normality using Kolmogorov-Smirnov test.
+    Test for normality using Shapiro-Wilk and Kolmogorov-Smirnov tests.
     
     Parameters:
     - df: DataFrame containing the data
-    - columns: List of columns to test
+    - columns: List of columns to test. If None, tests all numeric columns.
     
     Returns:
     - normality_results: Dictionary with results for each column
     """
     normality_results = {}
     
+    # If columns are not provided, default to all numeric columns
+    if columns is None:
+        columns = df.select_dtypes(include='number').columns
+    
     for column in columns:
         data = df[column].dropna()
-        stat, p_value = kstest(data, 'norm')
+        shapiro_stat, shapiro_p = shapiro(data)
+        ks_stat, ks_p = kstest(data, 'norm')
         
         normality_results[column] = {
-            'Statistic': stat,
-            'p-value': p_value,
-            'is_normal': p_value > 0.05
+            'Shapiro-Wilk': {'Statistic': shapiro_stat, 'p-value': shapiro_p},
+            'Kolmogorov-Smirnov': {'Statistic': ks_stat, 'p-value': ks_p},
+            'is_normal': shapiro_p > 0.05 and ks_p > 0.05  # Considered normal if both tests fail to reject H0
         }
         
-        print(f"Column: {column}, Statistic={stat}, p-value={p_value}")
-        if p_value > 0.05:
-            print(f"The column '{column}' appears to be normally distributed (fail to reject H0).")
+        print(f"Column: {column}")
+        print(f"  Shapiro-Wilk: Statistic={shapiro_stat}, p-value={shapiro_p}")
+        print(f"  Kolmogorov-Smirnov: Statistic={ks_stat}, p-value={ks_p}")
+        
+        if normality_results[column]['is_normal']:
+            print(f"  The column '{column}' appears to be normally distributed (fail to reject H0).")
         else:
-            print(f"The column '{column}' does NOT appear to be normally distributed (reject H0).")
+            print(f"  The column '{column}' does NOT appear to be normally distributed (reject H0).")
     
     return normality_results
 

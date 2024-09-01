@@ -1,11 +1,11 @@
 from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
 from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram, create_tourist_map
-from src.data_cleaning import remove_zero_price, handle_outliers, test_normality
+from src.data_cleaning import remove_zero_price, handle_outliers
 from src.feature_engineering import perform_feature_engineering
 from src.correlations import (
     encode_categorical_columns, 
-    test_normality2, 
+    test_normality, 
     calculate_correlation_matrix, 
     plot_correlation_matrix, 
     plot_correlation_heatmap, 
@@ -64,18 +64,25 @@ def main():
     print('Normality test results after handling outliers:')
 
     numeric_vars = df.select_dtypes(include='number').columns
-    for var in numeric_vars:
-        normality_result = test_normality(df, var)
-        print(f'Normality test result for {var}:', normality_result)
-        
-        # Interpret the result
-        alpha = 0.05  # Common threshold for statistical significance
-        if normality_result['Shapiro-Wilk']['p-value'] > alpha:
-            print(f"The variable '{var}' appears to be normally distributed (fail to reject H0).")
-        else:
-            print(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
+    print(f"Numeric columns: {numeric_vars}")  # Debugging output
 
-    print('Data cleaning and EDA completed successfully.')
+    for var in numeric_vars:
+        print(f"Testing normality for column: {var}")  # Debugging step
+        try:
+            normality_result = test_normality(df, [var])
+            print(f'Normality test result for {var}:', normality_result)
+
+            # Interpret the result
+            alpha = 0.05  # Common threshold for statistical significance
+            if normality_result[var]['is_normal']:
+                print(f"The variable '{var}' appears to be normally distributed (fail to reject H0).")
+            else:
+                print(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
+        except KeyError as e:
+            print(f"Error: {e} - Column {var} not found in DataFrame.")
+        except Exception as e:
+            print(f"An unexpected error occurred while testing column {var}: {e}")
+
 
     # Feature Engineering
     df_engineered = perform_feature_engineering(df)
@@ -98,7 +105,7 @@ def main():
 
     # Test for normality
     columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
-    normality_results = test_normality2(df_encoded, columns_to_test)
+    normality_results = test_normality(df_encoded, columns_to_test)
 
     # Calculate correlation matrix
     corr_matrix = calculate_correlation_matrix(df_encoded, method='spearman')
