@@ -1,18 +1,16 @@
 from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
-from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram, create_tourist_map
+from src.visualization import (plot_price_by_neighbourhood, plot_boxplot, create_tourist_map, 
+                               plot_correlation_matrix, plot_correlation_heatmap
+                               )
 from src.data_cleaning import remove_zero_price, handle_outliers
 from src.feature_engineering import perform_feature_engineering
 from src.correlations import (
     encode_categorical_columns, 
     test_normality, 
-    calculate_correlation_matrix, 
-    plot_correlation_matrix, 
-    plot_correlation_heatmap, 
+    calculate_correlation_matrix,  
     find_significant_correlations
 )
-from sklearn.preprocessing import LabelEncoder
-
 
 def main():
     filepaths = {
