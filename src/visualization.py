@@ -120,7 +120,7 @@ def plot_histogram(df, column, title="Histogram"):
 
 
 
-def create_tourist_map(df, save_path='visualizations/tourist_map2.html'):
+def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
     """
     Create an interactive map showing all tourist locations with clustered property markers.
 
@@ -143,7 +143,7 @@ def create_tourist_map(df, save_path='visualizations/tourist_map2.html'):
 
     # Create a map centered on Rio de Janeiro
     map_center = [-22.90642, -43.18223]
-    map1 = folium.Map(location=map_center, zoom_start=11.5)
+    tourist_map = folium.Map(location=map_center, zoom_start=11.5)
 
     # Add the tourist spots with distinctive icons
     for place in tourist_locations:
@@ -151,16 +151,16 @@ def create_tourist_map(df, save_path='visualizations/tourist_map2.html'):
             location=place["location"],
             popup=place["name"],
             icon=folium.Icon(color='blue', prefix='fa', icon=place["icon"])
-        ).add_to(map1)
+        ).add_to(tourist_map)
 
     # Add clustered property markers to the map
     lats = df['latitude'].tolist()
     lons = df['longitude'].tolist()
     locations = list(zip(lats, lons))
-    FastMarkerCluster(data=locations).add_to(map1)
+    FastMarkerCluster(data=locations).add_to(tourist_map)
 
     # Save the map as an HTML file
-    map1.save(save_path)
+    tourist_map.save(save_path)
     print(f"Map saved as {save_path}")
 
 
