@@ -94,7 +94,7 @@ def main():
     categorical_columns = ['room_type', 'neighbourhood_cleansed', 'host_response_time', 
                            'host_is_superhost', 'host_identity_verified', 'property_type', 
                            'host_acceptance_rate']
-    df_encoded = encode_categorical_columns(data_cleaned['merged_listing'], categorical_columns)
+    df_encoded = encode_categorical_columns(df, categorical_columns)
 
     # Test for normality
     columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
