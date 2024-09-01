@@ -116,7 +116,7 @@ def main():
 
     # Find and display significant correlations
     correlated_pairs_df = find_significant_correlations(corr_matrix)
-    print("Variables correlacionadas con una correlación mayor a 0.7 o menor a -0.7:")
+    print("Correlated variables with a correlation greater than 0.7 or less than -0.7:")
     print(correlated_pairs_df)
 
 if __name__ == '__main__':
