@@ -3,6 +3,15 @@ from src.EDA import basic_info
 from src.visualization import plot_variables, plot_price_by_neighbourhood, plot_boxplot, plot_violin, plot_histogram, create_tourist_map
 from src.data_cleaning import remove_zero_price, handle_outliers, test_normality
 from src.feature_engineering import perform_feature_engineering
+from src.correlations import (
+    encode_categorical_columns, 
+    test_normality2, 
+    calculate_correlation_matrix, 
+    plot_correlation_matrix, 
+    plot_correlation_heatmap, 
+    find_significant_correlations
+)
+from sklearn.preprocessing import LabelEncoder
 
 
 def main():
@@ -80,6 +89,30 @@ def main():
     tourist_map = create_tourist_map(df_engineered)
 
     print("Tourist map created and saved as 'tourist_map.html' in 'visualizations/'.")
+
+    # Encode categorical variables
+    categorical_columns = ['room_type', 'neighbourhood_cleansed', 'host_response_time', 
+                           'host_is_superhost', 'host_identity_verified', 'property_type', 
+                           'host_acceptance_rate']
+    df_encoded = encode_categorical_columns(data_cleaned['merged_listing'], categorical_columns)
+
+    # Test for normality
+    columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
+    normality_results = test_normality2(df_encoded, columns_to_test)
+
+    # Calculate correlation matrix
+    corr_matrix = calculate_correlation_matrix(df_encoded, method='spearman')
+
+    # Plot the correlation matrix
+    plot_correlation_matrix(corr_matrix)
+
+    # Plot using Plotly
+    plot_correlation_heatmap(corr_matrix)
+
+    # Find and display significant correlations
+    correlated_pairs_df = find_significant_correlations(corr_matrix)
+    print("Variables correlacionadas con una correlación mayor a 0.7 o menor a -0.7:")
+    print(correlated_pairs_df)
 
 if __name__ == '__main__':
     main()
