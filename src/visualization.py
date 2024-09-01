@@ -120,20 +120,19 @@ def plot_histogram(df, column, title="Histogram"):
 
 
 
-def create_tourist_map(df, max_distance=5, save_path='tourist_map.html'):
+def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
     """
-    Create an interactive map showing all tourist locations and nearby properties within a specified distance.
+    Create an interactive map showing all tourist locations with clustered property markers.
 
     Parameters:
         df (pd.DataFrame): The DataFrame containing the property data.
-        max_distance (float): The maximum distance in kilometers to filter properties around each tourist location.
         save_path (str): Path where the map HTML file will be saved.
 
     Returns:
         None: The function saves the map as an HTML file.
     """
 
-    # Coordenadas de los puntos turísticos relevantes con íconos distintivos
+    # Coordinates of the tourist spots with distinctive icons
     tourist_locations = [
         {"name": "Cristo Redentor", "location": [-22.9519, -43.2105], "icon": 'fa-monument'},
         {"name": "Pão de Açúcar", "location": [-22.9486, -43.1553], "icon": 'fa-mountain'},
@@ -142,11 +141,11 @@ def create_tourist_map(df, max_distance=5, save_path='tourist_map.html'):
         {"name": "Jardim Botânico", "location": [-22.9674, -43.2292], "icon": 'fa-leaf'}
     ]
 
-    # Crear el mapa centrado en Rio de Janeiro
+    # Create a map centered on Rio de Janeiro
     map_center = [-22.90642, -43.18223]
     map1 = folium.Map(location=map_center, zoom_start=11.5)
 
-    # Añadir los puntos turísticos relevantes al mapa con íconos distintivos
+    # Add the tourist spots with distinctive icons
     for place in tourist_locations:
         folium.Marker(
             location=place["location"],
@@ -154,28 +153,16 @@ def create_tourist_map(df, max_distance=5, save_path='tourist_map.html'):
             icon=folium.Icon(color='blue', prefix='fa', icon=place["icon"])
         ).add_to(map1)
 
-    # Filtrar las propiedades para reducir el número de puntos (opcional)
-    df = df.sample(frac=0.1)  # Muestra aleatoria del 10% de los datos
+    # Filter properties to reduce the number of points (optional)
+    df = df.sample(frac=0.1)  # Random sample of 10% of the data
 
-    # Añadir todas las propiedades al mapa
+    # Add clustered property markers to the map
     lats = df['latitude'].tolist()
     lons = df['longitude'].tolist()
     locations = list(zip(lats, lons))
     FastMarkerCluster(data=locations).add_to(map1)
 
-    # Añadir las propiedades que están dentro del rango especificado de cada lugar turístico
-    for place in tourist_locations:
-        location_coords = place["location"]
-        filtered_df = df[df.apply(lambda row: geodesic(location_coords, (row['latitude'], row['longitude'])).km <= max_distance, axis=1)]
-        
-        for idx, row in filtered_df.iterrows():
-            folium.Marker(
-                location=[row['latitude'], row['longitude']],
-                popup=f"{row['neighbourhood_cleansed']}",
-                icon=folium.Icon(color='green', icon='home', prefix='fa')
-            ).add_to(map1)
-
-    # Guardar el mapa como archivo HTML
+    # Save the map as an HTML file
     map1.save(save_path)
     print(f"Map saved as {save_path}")
 

@@ -77,9 +77,9 @@ def main():
     print("Feature engineering completed and saved in 'data/processed/'.")
 
     # Crear y guardar el mapa de los lugares turísticos
-    tourist_map = create_tourist_map(df_engineered, max_distance=5)
+    tourist_map = create_tourist_map(df_engineered)
 
-    print("Tourist map created and saved as 'tourist_map.html'.")
+    print("Tourist map created and saved as 'tourist_map.html' in 'visualizations/'.")
 
 if __name__ == '__main__':
     main()
