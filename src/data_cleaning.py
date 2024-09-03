@@ -104,3 +104,29 @@ def remove_outliers(df: pd.DataFrame, columns: list, method: str = 'iqr') -> pd.
             z_scores = zscore(df[column].dropna())
             df = df[(np.abs(z_scores) <= 3)]
     return df
+
+def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Handle missing values in the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame to clean.
+
+    Returns:
+        pd.DataFrame: The DataFrame with missing values handled.
+    """
+    df = df.drop(columns='price_R', errors='ignore')
+    df['price'] = df.groupby(['neighbourhood_cleansed', 'room_type'])['price'].transform(lambda x: x.fillna(x.mean()))
+    df['price'] = df['price'].fillna(df['price'].median())
+    df = df.dropna(subset=['last_review'])
+    df['host_response_rate'] = df['host_response_rate'].fillna(df['host_response_rate'].mean())
+    df['host_response_time'] = df['host_response_time'].fillna(df['host_response_time'].mode()[0])
+    df['host_is_superhost'] = df['host_is_superhost'].fillna(df['host_is_superhost'].mode()[0])
+    df['host_acceptance_rate'] = df.groupby('host_response_rate')['host_acceptance_rate'].transform(lambda x: x.fillna(x.median()))
+    review_columns = [
+        'review_scores_rating', 'review_scores_cleanliness', 'review_scores_location',
+        'review_scores_accuracy', 'review_scores_communication', 'review_scores_checkin',
+        'review_scores_value'
+    ]
+    df = df.dropna(subset=review_columns)
+    return df
