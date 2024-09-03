@@ -1,9 +1,8 @@
 from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
 from src.visualization import (plot_price_by_neighbourhood, plot_boxplot, create_tourist_map, 
-                               plot_correlation_matrix, plot_correlation_heatmap
-                               )
-from src.data_cleaning import remove_zero_price, handle_outliers
+                               plot_correlation_matrix, plot_correlation_heatmap)
+from src.data_cleaning import remove_zero_price, handle_outliers, handle_missing_values
 from src.feature_engineering import perform_feature_engineering
 from src.correlations import (
     encode_categorical_columns, 
@@ -28,39 +27,26 @@ def main():
     
     print("Data preprocessing completed successfully and files saved in 'data/intermediate/'.")
 
-    # Perform EDA
-    basic_info(data_cleaned['merged_listing'])
-
-    # Define the variables to plot
-    variables_to_plot = [
-        'price', 'accommodates', 'beds', 'room_type',
-        'review_scores_rating', 'minimum_nights', 'maximum_nights', 'host_is_superhost'
-    ]
-    
-    # Generate visualizations for each variable in the list
-    #for var in variables_to_plot:
-        #plot_variables(data_cleaned['merged_listing'], var)
-    
-    # Plot price by neighbourhood
-    plot_price_by_neighbourhood(data_cleaned['merged_listing'])
-
-    # Cleaned data
-    ## Remove rows where price is zero
+    # Handle missing values
     df = data_cleaned['merged_listing']
+    df = handle_missing_values(df)
+    
+    print("Missing values handled successfully.")
+
+    # Remove rows where price is zero
     df = remove_zero_price(df)
 
-    ## Plot before handling outliers
+    # Plot before handling outliers
     plot_boxplot(df, 'price', title='Boxplot of Price Before Outlier Handling')
 
-    ## Handle 'price' outliers using IQR
+    # Handle 'price' outliers using IQR
     df = handle_outliers(df, 'price', method='iqr')
 
-    ## Plot after handling outliers
+    # Plot after handling outliers
     plot_boxplot(df, 'price', title='Boxplot of Price After Outlier Handling')
 
     # Test normality for each variable after handling outliers
     print('Normality test results after handling outliers:')
-
     numeric_vars = df.select_dtypes(include='number').columns
     print(f"Numeric columns: {numeric_vars}")  # Debugging output
 
@@ -80,7 +66,6 @@ def main():
             print(f"Error: {e} - Column {var} not found in DataFrame.")
         except Exception as e:
             print(f"An unexpected error occurred while testing column {var}: {e}")
-
 
     # Feature Engineering
     df_engineered = perform_feature_engineering(df)

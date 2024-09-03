@@ -69,6 +69,7 @@ def merge_listings_with_details(listing: pd.DataFrame, listing_details: pd.DataF
     ]
     merged_df = pd.merge(listing, listing_details[target_columns], on='id', how='left')
     merged_df['host_response_rate'] = pd.to_numeric(merged_df['host_response_rate'].str.strip('%'))
+    merged_df['host_acceptance_rate'] = pd.to_numeric(merged_df['host_acceptance_rate'].str.strip('%'))
     return merged_df
 
 def clean_duplicated_rows(df: pd.DataFrame) -> pd.DataFrame:
