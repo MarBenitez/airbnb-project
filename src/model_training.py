@@ -42,7 +42,7 @@ def preprocess_features(df, target_column='price'):
     
     return X, y
 
-def scale_features(X_train, X_test, sample_frac=0.1):
+def scale_features(X_train, X_test):
     """
     Scale the feature matrices using StandardScaler.
     
@@ -57,10 +57,8 @@ def scale_features(X_train, X_test, sample_frac=0.1):
     """
     scaler = StandardScaler()
 
-    X_train_sampled = X_train.sample(frac=sample_frac, random_state=42)
-
-
-    X_train_scaled = scaler.fit_transform(X_train_sampled)
+    # Ajustar el escalador a los datos de entrenamiento completos
+    X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
     
     return X_train_scaled, X_test_scaled, scaler
