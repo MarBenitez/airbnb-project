@@ -1,3 +1,4 @@
+import logging
 from src.data_preprocessing import preprocess_data
 from src.EDA import basic_info
 from src.visualization import (plot_price_by_neighbourhood, plot_boxplot, create_tourist_map, 
@@ -11,7 +12,8 @@ from src.correlations import (
     find_significant_correlations
 )
 
-# Define filepaths as a module-level constant, outside the `main()` function.
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 filepaths = {
     'listing': 'data/raw/listings.csv',
     'listing_details': 'data/raw/listings.csv.gz',
@@ -23,87 +25,66 @@ filepaths = {
 }
 
 def main():
-    # Preprocess the data and save the merged listing if needed
-    data_cleaned = preprocess_data(filepaths, save_merged=True)
-    
-    print("Data preprocessing completed successfully and files saved in 'data/intermediate/'.")
+    data_preprocessed = preprocess_data(filepaths, save_merged=True)
+    logging.info("Data preprocessing completed successfully and files saved in 'data/intermediate/'.")
 
-    # Handle missing values
-    df = data_cleaned['merged_listing']
-    df = handle_missing_values(df)
-    
-    print("Missing values handled successfully.")
+    df_preprocessed = data_preprocessed['merged_listing']
+    df_no_nulls = handle_missing_values(df_preprocessed)
+    logging.info("Missing values handled successfully.")
 
-    # Remove rows where price is zero
-    df = remove_zero_price(df)
+    df_no_nulls = remove_zero_price(df_no_nulls)
 
-    # Plot before handling outliers
-    plot_boxplot(df, 'price', title='Boxplot of Price Before Outlier Handling')
+    plot_boxplot(df_no_nulls, 'price', title='Boxplot of Price Before Outlier Handling')
 
-    # Handle 'price' outliers using IQR
-    df = handle_outliers(df, 'price', method='iqr')
+    df_cleaned = handle_outliers(df_no_nulls, 'price', method='iqr')
 
-    # Plot after handling outliers
-    plot_boxplot(df, 'price', title='Boxplot of Price After Outlier Handling')
+    plot_boxplot(df_cleaned, 'price', title='Boxplot of Price After Outlier Handling')
 
-    # Test normality for each variable after handling outliers
-    print('Normality test results after handling outliers:')
-    numeric_vars = df.select_dtypes(include='number').columns
-    print(f"Numeric columns: {numeric_vars}")  # Debugging output
+    logging.info('Normality test results after handling outliers:')
+    numeric_vars = df_cleaned.select_dtypes(include='number').columns
+    logging.debug(f"Numeric columns: {numeric_vars}")  # Debugging output
 
     for var in numeric_vars:
-        print(f"Testing normality for column: {var}")  # Debugging step
+        logging.debug(f"Testing normality for column: {var}")  # Debugging step
         try:
-            normality_result = test_normality(df, [var])
-            print(f'Normality test result for {var}:', normality_result)
+            normality_result = test_normality(df_cleaned, [var])
+            logging.info(f'Normality test result for {var}: {normality_result}')
 
-            # Interpret the result
-            alpha = 0.05  # Common threshold for statistical significance
+            alpha = 0.05  
             if normality_result[var]['is_normal']:
-                print(f"The variable '{var}' appears to be normally distributed (fail to reject H0).")
+                logging.info(f"The variable '{var}' appears to be normally distributed (fail to reject H0).")
             else:
-                print(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
+                logging.info(f"The variable '{var}' does NOT appear to be normally distributed (reject H0).")
         except KeyError as e:
-            print(f"Error: {e} - Column {var} not found in DataFrame.")
+            logging.error(f"Error: {e} - Column {var} not found in DataFrame.")
         except Exception as e:
-            print(f"An unexpected error occurred while testing column {var}: {e}")
+            logging.error(f"An unexpected error occurred while testing column {var}: {e}")
 
-    # Feature Engineering
-    df_engineered = perform_feature_engineering(df)
+    df_engineered = perform_feature_engineering(df_cleaned)
     
-    # Save the engineered data
     df_engineered.to_csv('data/processed/engineered_listing.csv', index=False)
-    
-    print("Feature engineering completed and saved in 'data/processed/'.")
+    logging.info("Feature engineering completed and saved in 'data/processed/'.")
 
-    # Create and save the tourist map
     tourist_map = create_tourist_map(df_engineered)
+    logging.info("Tourist map created and saved as 'tourist_map.html' in 'visualizations/'.")
 
-    print("Tourist map created and saved as 'tourist_map.html' in 'visualizations/'.")
-
-    # Encode categorical variables
     categorical_columns = ['room_type', 'neighbourhood_cleansed', 'host_response_time', 
                            'host_is_superhost', 'host_identity_verified', 'property_type', 
                            'host_acceptance_rate']
-    df_encoded = encode_categorical_columns(df, categorical_columns)
+    df_encoded = encode_categorical_columns(df_engineered, categorical_columns)
 
-    # Test for normality
     columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
     normality_results = test_normality(df_encoded, columns_to_test)
 
-    # Calculate correlation matrix
     corr_matrix = calculate_correlation_matrix(df_encoded, method='spearman')
 
-    # Plot the correlation matrix
     plot_correlation_matrix(corr_matrix)
 
-    # Plot using Plotly
     plot_correlation_heatmap(corr_matrix)
 
-    # Find and display significant correlations
     correlated_pairs_df = find_significant_correlations(corr_matrix)
-    print("Correlated variables with a correlation greater than 0.7 or less than -0.7:")
-    print(correlated_pairs_df)
+    logging.info("Correlated variables with a correlation greater than 0.7 or less than -0.7:")
+    logging.info(correlated_pairs_df)
 
 if __name__ == '__main__':
     main()
