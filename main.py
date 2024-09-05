@@ -11,17 +11,18 @@ from src.correlations import (
     find_significant_correlations
 )
 
+# Define filepaths as a module-level constant, outside the `main()` function.
+filepaths = {
+    'listing': 'data/raw/listings.csv',
+    'listing_details': 'data/raw/listings.csv.gz',
+    'reviews': 'data/raw/reviews.csv',
+    'reviews_details': 'data/raw/reviews.csv.gz',
+    'neighbourhoods': 'data/raw/neighbourhoods.csv',
+    'neighbourhoods_geo': 'data/raw/neighbourhoods.geojson',
+    'calendar': 'data/raw/calendar.csv.gz'
+}
+
 def main():
-    filepaths = {
-        'listing': 'data/raw/listings.csv',
-        'listing_details': 'data/raw/listings.csv.gz',
-        'reviews': 'data/raw/reviews.csv',
-        'reviews_details': 'data/raw/reviews.csv.gz',
-        'neighbourhoods': 'data/raw/neighbourhoods.csv',
-        'neighbourhoods_geo': 'data/raw/neighbourhoods.geojson',
-        'calendar': 'data/raw/calendar.csv.gz'
-    }
-    
     # Preprocess the data and save the merged listing if needed
     data_cleaned = preprocess_data(filepaths, save_merged=True)
     
@@ -75,7 +76,7 @@ def main():
     
     print("Feature engineering completed and saved in 'data/processed/'.")
 
-    # Crear y guardar el mapa de los lugares turísticos
+    # Create and save the tourist map
     tourist_map = create_tourist_map(df_engineered)
 
     print("Tourist map created and saved as 'tourist_map.html' in 'visualizations/'.")
