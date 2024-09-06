@@ -2,24 +2,6 @@ import pandas as pd
 import geopandas as gpd
 from typing import Dict
 
-def load_data(filepaths: Dict[str, str]) -> Dict[str, pd.DataFrame]:
-    """
-    Load datasets from a dictionary of file paths.
-
-    Parameters:
-        filepaths (dict): A dictionary with file names as keys and file paths as values.
-
-    Returns:
-        dict: A dictionary with file names as keys and DataFrames as values.
-    """
-    data = {}
-    for name, path in filepaths.items():
-        if path.endswith('.geojson'):
-            data[name] = gpd.read_file(path)
-        else:
-            data[name] = pd.read_csv(path)
-    return data
-
 def clean_listing_data(listing: pd.DataFrame) -> pd.DataFrame:
     """
     Clean the listing DataFrame by dropping unnecessary columns and converting data types.
@@ -95,29 +77,27 @@ def select_and_prepare_variables(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: The processed DataFrame.
     """
-    # Drop specific columns
     drop_col = ['host_name', 'host_listings_count', 'reviews_per_month', 'calculated_host_listings_count']
     df = df.drop(columns=drop_col)
 
-    # Create a new column for the price in a different currency (€)
     df.insert(1, 'price_R', df['price'].copy())
-    df['price'] = df['price'] * 0.17  # Replace with the current exchange rate
-    
+    df['price'] = df['price'] * 0.17  # Replace with the current exchange rate (€)
+    df = df.drop(columns=['price_R'])
+
     return df
 
-def preprocess_data(filepaths: Dict[str, str], save_merged: bool = True) -> Dict[str, pd.DataFrame]:
+def load_preprocess_data(data: Dict[str, pd.DataFrame], save_merged: bool = True) -> Dict[str, pd.DataFrame]:
     """
-    Load, clean, and preprocess all necessary data.
+    Drop unnecessary columns, merge df and preprocess all necessary data.
 
     Parameters:
-        filepaths (dict): A dictionary with file names as keys and file paths as values.
+        data (dict): A dictionary with file names as keys and Dataframes as values.
         save_merged (bool): If True, save the merged listing DataFrame to a CSV file.
 
     Returns:
         dict: A dictionary with preprocessed DataFrames.
     """
-    data = load_data(filepaths)
-    
+
     data['listing'] = clean_listing_data(data['listing'])
     data['listing_details'] = clean_listing_details(data['listing_details'])
     

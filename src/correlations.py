@@ -21,7 +21,7 @@ def encode_categorical_columns(df, categorical_columns):
         
     return df_encoded
 
-def test_normality(df, columns=None):
+def test_normality(df, columns=None, save_path=None):
     """
     Test for normality using Shapiro-Wilk and Kolmogorov-Smirnov tests.
     
@@ -60,7 +60,7 @@ def test_normality(df, columns=None):
     
     return normality_results
 
-def calculate_correlation_matrix(df, method='spearman'):
+def calculate_correlation_matrix(df, method='spearman', save_path=None):
     """
     Calculate the correlation matrix using a specified method.
     
@@ -76,7 +76,7 @@ def calculate_correlation_matrix(df, method='spearman'):
     
     return corr_matrix
 
-def find_significant_correlations(corr_matrix, threshold=0.7):
+def find_significant_correlations(corr_matrix, threshold=0.7, save_path=None):
     """
     Find pairs of variables with correlation higher than a threshold.
     
