@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-under_construction-yellow)
 
-This repository contains a refactored and modularized version of the original project developed in a Jupyter Notebook. The objective is to conduct a comprehensive analysis of the Airbnb dataset for Rio de Janeiro, and to develop an interactive application that will assist travelers in finding their ideal accommodation.
+This repository contains a refactored and modularized version of the original project developed in a Jupyter Notebook. The objective is to conduct a comprehensive analysis of the Airbnb dataset for Rio de Janeiro and to develop an interactive application that will assist travelers in finding their ideal accommodation.
 
 ## 🚧 Project Status
 
@@ -29,25 +29,43 @@ The dataset for Rio de Janeiro includes comprehensive information about the avai
 
 ## Project Structure
 
-- `data/`: Contains all data-related files and directories.
-  - `raw/`: Contains the raw, unprocessed data files.
-  - `processed/`: Contains the processed data files after cleaning and other preprocessing steps.
-  - `intermediate/`: Contains data files that are in intermediate stages of processing.
-- `notebooks/`: Contains the original Jupyter notebooks.
-- `src/`: Contains Python modules with functions for data processing, exploratory data analysis (EDA), feature engineering, modeling, and visualization.
-  - `__init__.py`: Initialization file for the package.
-  - `data_preprocessing.py`: Functions for loading and cleaning data.
-  - `EDA.py`: Functions for exploratory data analysis.
-  - `data_cleaning.py`: Functions for data cleaning and handling missing values.
-  - `feature_engineering.py`: Functions for creating and transforming features.
-  - `model_training.py`: Functions for model training and evaluation.
-  - `visualization.py`: Functions for creating visualizations.
-- `tests/`: Contains unit tests for the modules.
-- `env/`: Contains the virtual environment for the project.
-- `main.py`: The main script to orchestrate the execution of the project's workflow.
-- `requirements.txt`: Lists the dependencies required for the project.
-- `setup.py`: Configuration file for packaging the project.
+The project follows a well-structured modular design, split into different directories and files based on the function they perform.
 
+- **`data/`**: Contains all data-related files and directories.
+  - **`raw/`**: Contains the raw, unprocessed data files.
+  - **`intermediate/`**: Contains data files that are in intermediate stages of processing.
+  - **`processed/`**: Contains the processed data files after cleaning and feature engineering steps.
+  
+- **`results/`**: Contains the output files of analysis like normality test results and correlations.
+  - **`normality_tests/`**: Contains JSON files with the results of normality tests conducted at various stages.
+  - **`significant_correlations.csv`**: Stores the significant correlation pairs found in the correlation matrix analysis.
+
+- **`visualizations/`**: Contains visual outputs such as histograms, boxplots, and correlation matrices.
+  - **`cleaned_data/`**: Visualizations after data cleaning.
+  - **`encoded/`**: Visualizations after encoding categorical variables.
+  - **`engineered/`**: Visualizations after feature engineering.
+  - **`preprocessed/`**: Visualizations after the initial data preprocessing.
+  - **`correlations/`**: Contains the correlation matrix visualizations.
+  - **`tourist_map.html`**: Interactive map showing tourist spots and Airbnb properties.
+  
+- **`notebooks/`**: Contains the Jupyter notebook for exploration (`airbnb_rio.ipynb`).
+  
+- **`src/`**: Contains the core Python modules.
+  - **`correlations.py`**: Functions for calculating correlations and performing normality tests.
+  - **`data_cleaning.py`**: Functions to handle missing values, outliers, and data cleaning.
+  - **`data_loading.py`**: Functions to load the dataset.
+  - **`data_preprocessing.py`**: Functions to preprocess and transform data.
+  - **`EDA.py`**: Functions to perform Exploratory Data Analysis.
+  - **`feature_engineering.py`**: Functions to create new features from existing ones.
+  - **`visualization.py`**: Functions to generate various plots like histograms, boxplots, and maps.
+
+- **`tests/`**: Contains unit tests for validating the core functionality of the project.
+  
+- **`main.py`**: The main script that orchestrates the execution of the project workflow.
+  
+- **`requirements.txt`**: Lists the dependencies required for the project.
+  
+- **`setup.py`**: Configuration file for packaging the project.
 
 ## Tasks Breakdown
 
@@ -80,7 +98,6 @@ The dataset for Rio de Janeiro includes comprehensive information about the avai
 To run the analysis:
 
 - **In your local environment:** Simply download and open `airbnb_rio.ipynb` in Jupyter Notebook or Jupyter Lab and follow the code cells. The notebook is thoroughly documented to guide you through the analysis process.
-- **Google Colab:** Access the project on Google Drive, follow the link to the folder, and open `airbnb_rio_colab.ipynb` in Colab.
 
 ## Interactive Application Development
 - Design and implement an [_interactive application_](https://github.com/MarBenitez/airbnb-rio-streamlit-app)
@@ -97,17 +114,14 @@ To run the analysis:
 - **Scikit-learn** for feature engineering
 - **Streamlit** or **Dash** for building the interactive application
 
-## Requirements
-
-Install the necessary packages with:
-```bash
-pip install -r requirements.txt
-```
-
 ## Conclusion
-
 By completing this project, we aim to provide valuable insights into the Airbnb market in Rio de Janeiro. The interactive application will serve as a practical tool for travelers to find their ideal accommodation based on data-driven analysis.
 
----
+## Installation
 
-This refactoring process involved modularizing the original notebook into a well-structured repository, making it easier to maintain, collaborate, and extend in the future.
+Clone the repository and install the necessary dependencies with:
+```bash
+git clone https://github.com/MarBenitez/airbnb-rio-analysis.git
+cd airbnb-rio-analysis
+pip install -r requirements.txt
+
