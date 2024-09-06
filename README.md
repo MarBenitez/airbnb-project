@@ -112,7 +112,7 @@ To run the analysis:
 - **Pandas** and **NumPy** for data manipulation
 - **Matplotlib** and **Seaborn** for data visualization
 - **Scikit-learn** for feature engineering
-- **Streamlit** or **Dash** for building the interactive application
+- **Streamlit** for building the interactive application
 
 ## Conclusion
 By completing this project, we aim to provide valuable insights into the Airbnb market in Rio de Janeiro. The interactive application will serve as a practical tool for travelers to find their ideal accommodation based on data-driven analysis.
