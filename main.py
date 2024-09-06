@@ -53,6 +53,9 @@ def main():
     df_engineered.to_csv('data/processed/engineered_listing.csv', index=False)
     logging.info("Feature engineering completed and saved in 'data/processed/'.")
 
+    basic_info(df_preprocessed, suffix='engineered', output_path='data/processed/')
+    logging.info("Basic EDA for preprocessed data completed, missing values saved to 'data/processed/'.")
+
     create_tourist_map(df_engineered, save_path='visualizations/tourist_map.html')
     logging.info("Tourist map created and saved.")
 
@@ -60,6 +63,11 @@ def main():
                            'host_is_superhost', 'host_identity_verified', 'property_type', 
                            'host_acceptance_rate']
     df_encoded = encode_categorical_columns(df_engineered, categorical_columns)
+    df_encoded.to_csv('data/processed/engineered_listing_encoded.csv', index=False)
+    logging.info("Categorical columns encoded and saved in 'data/processed/'.")
+
+    basic_info(df_encoded, suffix='encoded', output_path='data/processed/')
+    logging.info("Basic EDA for encoded data completed, missing values saved to 'data/processed/'.")
 
     logging.info('Performing normality tests after feature engineering...')
     columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
