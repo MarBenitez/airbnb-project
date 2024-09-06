@@ -1,6 +1,9 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def load_data(filepath: str) -> pd.DataFrame:
     """
@@ -59,8 +62,8 @@ def save_data(train_df, inference_df, output_dir='data/testing/'):
     train_df.to_csv(modeling_path, index=False)
     inference_df.to_csv(inference_path, index=False)
     
-    print(f"Modeling data saved to: {modeling_path}")
-    print(f"Inference data saved to: {inference_path}")
+    logging.info(f"Modeling data saved to: {modeling_path}")
+    logging.info(f"Inference data saved to: {inference_path}")
 
 def main():
     """
