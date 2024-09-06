@@ -138,6 +138,8 @@ def plot_correlation_matrix(corr_matrix, save_path=None):
     sns.heatmap(corr_matrix, mask=mask, cmap='coolwarm', annot=True, fmt=".2f")
 
     if save_path:
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
         plt.savefig(save_path)
         logging.info(f"Correlation matrix saved successfully to {save_path}")
     else:

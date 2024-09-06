@@ -1,0 +1,46 @@
+{
+    "price": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.8535435510894194,
+            "p-value": 1.2574092169236632e-91
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9999999898836692,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "neighbourhood_cleansed": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.8870166093500725,
+            "p-value": 1.8287288720907104e-85
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9968009942800139,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "room_type": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.49619676230373644,
+            "p-value": 5.686070608746465e-124
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.5,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "availability_365": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.9302214086761739,
+            "p-value": 1.3383773605607557e-74
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9760971540576658,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    }
+}

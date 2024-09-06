@@ -1,0 +1,233 @@
+{
+    "id": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7804877848067838,
+            "p-value": 1.1261263520851044e-101
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 1.0,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "host_id": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.8510863168850422,
+            "p-value": 4.975624350905167e-92
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 1.0,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "latitude": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.9047345237036972,
+            "p-value": 1.562875242400262e-81
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 1.0,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "longitude": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7064634584802137,
+            "p-value": 3.2196403509408312e-109
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 1.0,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "price": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.8535435510894194,
+            "p-value": 1.2574092169236632e-91
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9999999898836692,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "minimum_nights": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.11588989793260274,
+            "p-value": 2.434576352593859e-140
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.8413447460685429,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "number_of_reviews": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.5929116521800792,
+            "p-value": 4.894493699247517e-118
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.8523500397747744,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "availability_365": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.9302214086761739,
+            "p-value": 1.3383773605607557e-74
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9760971540576658,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "number_of_reviews_ltm": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7562033316446989,
+            "p-value": 2.2876523143588598e-104
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.7050730421952363,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "host_response_rate": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.44678713615270726,
+            "p-value": 1.268294567867162e-126
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.978102272662002,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "accommodates": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.823333690875534,
+            "p-value": 3.231091478376407e-96
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9388602477503516,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "beds": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.6731727293556928,
+            "p-value": 1.4537010021547923e-111
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.767600729257242,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_rating": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.5450962271180988,
+            "p-value": 4.130731182026688e-121
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9938036986102321,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_cleanliness": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.5831617079749134,
+            "p-value": 1.0914681442022884e-118
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9922772723557005,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_location": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.47325095671994866,
+            "p-value": 3.1336923348421946e-125
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9961696593047561,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_accuracy": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.5131389643386017,
+            "p-value": 5.214323306518193e-123
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9939563412356853,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_communication": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.41269534960501364,
+            "p-value": 2.474153757715776e-128
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9957117314283966,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_checkin": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.39069366270285844,
+            "p-value": 2.1683333232307693e-129
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9958643740538498,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "review_scores_value": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.6391194299282141,
+            "p-value": 9.526525794019798e-115
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9927352002320601,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "host_acceptance_rate": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7507686791638504,
+            "p-value": 6.1540396733206154e-105
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.9687147511966329,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    },
+    "maximum_nights": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7653736714598768,
+            "p-value": 2.2247197745808008e-103
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 0.997734246215651,
+            "p-value": 0.0
+        },
+        "is_normal": "False"
+    }
+}

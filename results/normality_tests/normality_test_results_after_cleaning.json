@@ -1,0 +1,11 @@
+{
+    "id": {
+        "Shapiro-Wilk": {
+            "Statistic": 0.7804877848067838,
+            "p-value": 1.1261263520851044e-101
+        },
+        "Kolmogorov-Smirnov": {
+            "Statistic": 1.0,
+            "p-value": 0.0
+        },
+        "is_normal": 

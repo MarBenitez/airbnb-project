@@ -1,4 +1,6 @@
+import warnings
 import logging
+import os
 from src.data_loading import load_data
 from src.data_preprocessing import load_preprocess_data
 from src.EDA import basic_info
@@ -14,6 +16,8 @@ from src.correlations import (
     calculate_correlation_matrix,  
     find_significant_correlations
 )
+
+warnings.filterwarnings("ignore", category=UserWarning, module='scipy.stats')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -40,26 +44,21 @@ def main():
     
     df_cleaned = clean_data(df_preprocessed)
 
-    # 7. Perform normality tests on relevant columns
-    logging.info('Normality test results after handling outliers:')
+    # 7. Perform normality tests on relevant columns after cleaning
+    logging.info('Performing normality tests after handling outliers...')
     numeric_vars = df_cleaned.select_dtypes(include='number').columns
-
-    for var in numeric_vars:
-        try:
-            normality_result = test_normality(df_cleaned, [var], save_path=f'results/normality_test_{var}.json')
-            logging.info(f'Normality test result for {var} saved to file.')
-        except KeyError as e:
-            logging.error(f"Error: {e} - Column {var} not found in DataFrame.")
-        except Exception as e:
-            logging.error(f"An unexpected error occurred while testing column {var}: {e}")
     
+    # Normality tests after cleaning
+    test_normality(df_cleaned, columns=numeric_vars, save_path='results/normality_tests', file_suffix='after_cleaning')
+    logging.info("Normality tests after cleaning saved to 'results/normality_tests'.")
+
     # 8. Feature Engineering
     df_engineered = perform_feature_engineering(df_cleaned)
     df_engineered.to_csv('data/processed/engineered_listing.csv', index=False)
     logging.info("Feature engineering completed and saved in 'data/processed/'.")
 
     # 9. Create tourist map visualization
-    tourist_map = create_tourist_map(df_engineered, save_path='visualizations/tourist_map.html')
+    create_tourist_map(df_engineered, save_path='visualizations/tourist_map.html')
     logging.info("Tourist map created and saved.")
 
     # 10. Encode categorical columns
@@ -68,15 +67,26 @@ def main():
                            'host_acceptance_rate']
     df_encoded = encode_categorical_columns(df_engineered, categorical_columns)
 
-    # 11. Perform normality tests again if necessary (post-feature engineering)
+    # 11. Perform normality tests again (after feature engineering and encoding)
+    logging.info('Performing normality tests after feature engineering...')
     columns_to_test = ['price', 'neighbourhood_cleansed', 'room_type', 'availability_365']
-    normality_results = test_normality(df_encoded, columns_to_test, save_path='results/post_feature_normality.json')
+    test_normality(df_encoded, columns=columns_to_test, save_path='results/normality_tests', file_suffix='after_feature_engineering')
+    logging.info("Normality tests after feature engineering saved to 'results/normality_tests'.")
+
+    # 12. Create the correlations folder if it doesn't exist
+    correlations_folder = 'visualizations/correlations'
+    if not os.path.exists(correlations_folder):
+        os.makedirs(correlations_folder)
+        logging.info(f"Created folder: {correlations_folder}")
+    else:
+        logging.info(f"Folder already exists: {correlations_folder}")
 
     # 12. Calculate correlation matrix
     corr_matrix = calculate_correlation_matrix(df_encoded, method='spearman')
 
     # 13. Plot correlation matrix and heatmap
-    plot_correlation_matrix(corr_matrix, save_path='visualizations/correlation_matrix.png')
+    plot_correlation_matrix(corr_matrix, save_path='visualizations/correlations/correlation_matrix_spearman.png')
+    logging.info("Correlation matrix saved to 'visualizations/correlations'.")
 
     # 14. Find and log significant correlations
     correlated_pairs_df = find_significant_correlations(corr_matrix)
