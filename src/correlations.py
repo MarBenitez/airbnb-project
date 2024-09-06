@@ -54,7 +54,6 @@ def test_normality(df, columns=None, save_path=None, file_suffix=''):
     """
     normality_results = {}
     
-    # If columns are not provided, default to all numeric columns
     if columns is None:
         columns = df.select_dtypes(include='number').columns
     
@@ -69,13 +68,10 @@ def test_normality(df, columns=None, save_path=None, file_suffix=''):
             'is_normal': str(shapiro_p > 0.05 and ks_p > 0.05)  # Convert boolean to string for JSON compatibility
         }
     
-    # Ensure the save_path exists
     create_folder_if_not_exists(save_path)
     
-    # Construct the output file name with suffix
     output_file = os.path.join(save_path, f'normality_test_{file_suffix}.json')
 
-    # Write the results to a JSON file
     with open(output_file, 'w') as f:
         json.dump(normality_results, f, indent=4)
     

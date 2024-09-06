@@ -93,7 +93,6 @@ def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
     Returns:
         None: The function saves the map as an HTML file.
     """
-    # Coordinates of the tourist spots with distinctive icons
     tourist_locations = [
         {"name": "Cristo Redentor", "location": [-22.9519, -43.2105], "icon": 'fa-monument'},
         {"name": "Pão de Açúcar", "location": [-22.9486, -43.1553], "icon": 'fa-mountain'},
@@ -102,11 +101,9 @@ def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
         {"name": "Jardim Botânico", "location": [-22.9674, -43.2292], "icon": 'fa-leaf'}
     ]
 
-    # Create a map centered on Rio de Janeiro
     map_center = [-22.90642, -43.18223]
     tourist_map = folium.Map(location=map_center, zoom_start=11.5)
 
-    # Add the tourist spots with distinctive icons
     for place in tourist_locations:
         folium.Marker(
             location=place["location"],
@@ -114,13 +111,11 @@ def create_tourist_map(df, save_path='visualizations/tourist_map.html'):
             icon=folium.Icon(color='blue', prefix='fa', icon=place["icon"])
         ).add_to(tourist_map)
 
-    # Add clustered property markers to the map
     lats = df['latitude'].tolist()
     lons = df['longitude'].tolist()
     locations = list(zip(lats, lons))
     FastMarkerCluster(data=locations).add_to(tourist_map)
 
-    # Save the map as an HTML file
     tourist_map.save(save_path)
     logging.info(f"Map saved as {save_path}")
 
@@ -138,7 +133,6 @@ def plot_correlation_matrix(corr_matrix, save_path=None):
     sns.heatmap(corr_matrix, mask=mask, cmap='coolwarm', annot=True, fmt=".2f")
 
     if save_path:
-        # Ensure the directory exists
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         plt.savefig(save_path)
         logging.info(f"Correlation matrix saved successfully to {save_path}")

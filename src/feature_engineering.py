@@ -13,7 +13,6 @@ def drop_inconsistent_columns(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: The DataFrame with dropped columns.
     """
-    # Drop columns that are inconsistent or have many missing values
     columns_to_drop = ['beds']
     df = df.drop(columns=columns_to_drop)
     
@@ -29,7 +28,6 @@ def calculate_distance_to_touristic_places(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: The DataFrame with new columns for distances to touristic places.
     """
-    # Define the coordinates of key touristic places
     touristic_places = {
         'cristo_redentor': (-22.9519, -43.2105),
         'pan_de_azucar': (-22.9486, -43.1553),
@@ -38,12 +36,10 @@ def calculate_distance_to_touristic_places(df: pd.DataFrame) -> pd.DataFrame:
         'botanical_garden': (-22.9674, -43.2292)
     }
     
-    # Perform clustering by region
     num_clusters = 156  # Number of neighborhoods
     kmeans = KMeans(n_clusters=num_clusters, random_state=42)
     df['region'] = kmeans.fit_predict(df[['latitude', 'longitude']])
     
-    # Calculate distances to each touristic place
     for place, coords in touristic_places.items():
         distance_col = f'distance_to_{place}'
         df[distance_col] = df.apply(lambda row: great_circle((row['latitude'], row['longitude']), coords).kilometers, axis=1)

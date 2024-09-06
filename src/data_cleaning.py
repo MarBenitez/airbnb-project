@@ -78,7 +78,6 @@ def handle_outliers(df: pd.DataFrame, column: str, method: str = 'iqr') -> pd.Da
     else:
         raise ValueError("Method must be 'iqr' or 'zscore'")
 
-    # Replace values outside bounds with the respective bounds
     df[column] = np.where(df[column] > upper_bound, upper_bound, df[column])
     df[column] = np.where(df[column] < lower_bound, lower_bound, df[column])
 
@@ -116,10 +115,8 @@ def clean_data(df: pd.DataFrame, vis_folder: str = 'visualizations/cleaned_data'
     """
     logging.info("Starting the data cleaning process...")
     
-    # Ensure the folder for visualizations exists
     create_folder_if_not_exists(vis_folder)
 
-    # Handling missing values
     df_cleaned = handle_missing_values(df)
 
     plot_histogram(df_cleaned, 'price', title="Price Distribution After Missing Values Handling",
