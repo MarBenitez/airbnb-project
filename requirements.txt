@@ -6,6 +6,6 @@ scikit-learn
 scipy
 statsmodels
 geopy
-plotly
 folium
 geopandas
+xgboost
