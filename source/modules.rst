@@ -1,72 +1,72 @@
 Project Modules
 ===============
 
-src.data_loading
+data_loading
 ----------------
-.. automodule:: src.data_loading
+.. automodule:: data_loading
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.data_preprocessing
+data_preprocessing
 ----------------------
-.. automodule:: src.data_preprocessing
+.. automodule:: data_preprocessing
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.data_cleaning
+data_cleaning
 -----------------
-.. automodule:: src.data_cleaning
+.. automodule:: data_cleaning
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.EDA
+EDA
 -------
-.. automodule:: src.EDA
+.. automodule:: EDA
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.feature_engineering
+feature_engineering
 -----------------------
-.. automodule:: src.feature_engineering
+.. automodule:: feature_engineering
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.visualization
+visualization
 -----------------
-.. automodule:: src.visualization
+.. automodule:: visualization
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.correlations
+correlations
 ----------------
-.. automodule:: src.correlations
+.. automodule:: correlations
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.spliting_data
+spliting_data
 ------------------
-.. automodule:: src.spliting_data
+.. automodule:: spliting_data
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.model_training
+model_training
 ------------------
-.. automodule:: src.model_training
+.. automodule:: model_training
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.model_inference
+model_inference
 -------------------
-.. automodule:: src.model_inference
+.. automodule:: model_inference
    :members:
    :undoc-members:
    :show-inheritance:
