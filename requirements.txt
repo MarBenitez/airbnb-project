@@ -9,3 +9,6 @@ geopy
 folium
 geopandas
 xgboost
+fastapi
+pydantic
+uvicorn
