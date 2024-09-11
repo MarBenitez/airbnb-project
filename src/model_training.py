@@ -99,7 +99,7 @@ def hyperparameter_tuning(X_train, y_train, model, param_dist):
     random_search.fit(X_train, y_train)
     return random_search.best_estimator_
 
-def save_model(model, filename):
+def save_model_and_scaler(model, scaler, model_filename, scaler_filename):
     """
     Save the trained model to a file.
     
@@ -107,7 +107,28 @@ def save_model(model, filename):
     - model: Trained machine learning model.
     - filename: Path where the model will be saved.
     """
-    joblib.dump(model, filename)
+    joblib.dump(model, model_filename)
+    joblib.dump(scaler, scaler_filename)
+
+def save_results(model_name, mse, rmse, r2, mae, filename):
+    """
+    Save the evaluation results to a file.
+    
+    Parameters:
+    - model_name: Name of the model being evaluated.
+    - mse: Mean Squared Error.
+    - rmse: Root Mean Squared Error.
+    - r2: R-squared score.
+    - mae: Mean Absolute Error.
+    - filename: Path to the file where the results will be saved.
+    """
+    with open(filename, 'a') as f:
+        f.write(f"Model: {model_name}\n")
+        f.write(f"MSE: {mse}\n")
+        f.write(f"RMSE: {rmse}\n")
+        f.write(f"R2: {r2}\n")
+        f.write(f"MAE: {mae}\n")
+        f.write("\n")
 
 def main():
     """
@@ -137,7 +158,8 @@ def main():
     mse, rmse, r2, mae = evaluate_model(best_rf, X_test_scaled, y_test)
     print(f'Best RF: MSE = {mse}, RMSE = {rmse}, R2 = {r2}, MAE = {mae}')
     
-    save_model(best_rf, './models/module/best_rf_model.pkl')
+    save_model_and_scaler(best_rf, scaler, './models/module/best_rf_model.pkl', './models/module/scaler_rf.pkl')
+    save_results('Random Forest', mse, rmse, r2, mae, './models/module/model_results.txt')
 
     xgb_model = xgb.XGBRegressor(random_state=42)
     param_dist_xgb = {
@@ -155,7 +177,8 @@ def main():
     mse, rmse, r2, mae = evaluate_model(best_xgb, X_test_scaled, y_test)
     print(f'Best XGB: MSE = {mse}, RMSE = {rmse}, R2 = {r2}, MAE = {mae}')
     
-    save_model(best_xgb, './models/module/best_xgb_model.pkl')
+    save_model_and_scaler(best_xgb, scaler, './models/module/best_xgb_model.pkl', './models/module/scaler_xgb.pkl')
+    save_results('Random Forest', mse, rmse, r2, mae, './models/module/model_results.txt')
 
 if __name__ == '__main__':
     main()
