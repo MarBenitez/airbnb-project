@@ -35,8 +35,9 @@ The project follows a well-structured modular design, split into different direc
   - **`raw/`**: Contains the raw, unprocessed data files.
   - **`intermediate/`**: Contains data files that are in intermediate stages of processing.
   - **`processed/`**: Contains the processed data files after cleaning and feature engineering steps.
-  
-- **`results/`**: Contains the output files of analysis like normality test results and correlations.
+  - **`modeling/`**: Data specifically prepared for modeling and inference.
+
+- **`results/`**: Contains the output files (before modeling) of analysis like normality test results and correlations.
   - **`normality_tests/`**: Contains JSON files with the results of normality tests conducted at various stages.
   - **`significant_correlations.csv`**: Stores the significant correlation pairs found in the correlation matrix analysis.
 
@@ -48,7 +49,7 @@ The project follows a well-structured modular design, split into different direc
   - **`correlations/`**: Contains the correlation matrix visualizations.
   - **`tourist_map.html`**: Interactive map showing tourist spots and Airbnb properties.
   
-- **`notebooks/`**: Contains the Jupyter notebook for exploration (`airbnb_rio.ipynb`).
+- **`notebooks/`**: Contains the Jupyter notebook for exploration (`airbnb_rio.ipynb`) and modeling.
   
 - **`src/`**: Contains the core Python modules.
   - **`correlations.py`**: Functions for calculating correlations and performing normality tests.
@@ -58,6 +59,9 @@ The project follows a well-structured modular design, split into different direc
   - **`EDA.py`**: Functions to perform Exploratory Data Analysis.
   - **`feature_engineering.py`**: Functions to create new features from existing ones.
   - **`visualization.py`**: Functions to generate various plots like histograms, boxplots, and maps.
+  - **`split_data.py`**: Functions to split the data into training and testing sets.
+  - **`model_training.py`**: Functions to train and evaluate machine learning models.
+  - **`model_inference.py`**: Functions to make predictions using trained models.
 
 - **`tests/`**: Contains unit tests for validating the core functionality of the project.
   
@@ -66,6 +70,10 @@ The project follows a well-structured modular design, split into different direc
 - **`requirements.txt`**: Lists the dependencies required for the project.
   
 - **`setup.py`**: Configuration file for packaging the project.
+
+- **`doc/`**: Documentation generated using Sphinx in HTML format.
+
+- **`models/`**: Contains saved models and scalers for predictions.
 
 ## Tasks Breakdown
 
@@ -93,11 +101,18 @@ The project follows a well-structured modular design, split into different direc
 - Identify highly correlated variables
 - Understand relationships between different features
 
+### 5. Modeling and Inference
+- Develop machine learning models (Random Forest, XGBoost, etc.).
+- Perform hyperparameter tuning with techniques like **RandomizedSearchCV**.
+- Split data into training, testing, and inference sets.
+
+
 ## Notebooks
 
-To run the analysis:
+Notebooks are used for exploratory analysis and model testing before modularization:
 
-- **In your local environment:** Simply download and open `airbnb_rio.ipynb` in Jupyter Notebook or Jupyter Lab and follow the code cells. The notebook is thoroughly documented to guide you through the analysis process.
+- **`airbnb_rio.ipynb`**: Main notebook containing the complete analysis workflow.
+- **`models.ipynb`**: Dedicated notebook for model experimentation.
 
 ## Interactive Application Development
 - Design and implement an [_interactive application_](https://github.com/MarBenitez/airbnb-rio-streamlit-app)
@@ -108,11 +123,16 @@ To run the analysis:
 
 ## Tools and Technologies
 
-- **Python** for data analysis and cleaning
-- **Pandas** and **NumPy** for data manipulation
-- **Matplotlib** and **Seaborn** for data visualization
-- **Scikit-learn** for feature engineering
-- **Streamlit** for building the interactive application
+The project leverages a wide range of Python tools and libraries:
+
+- **Python**: Core programming language.
+- **Pandas, NumPy**: Data manipulation and analysis.
+- **Matplotlib, Seaborn**: Data visualization.
+- **Scikit-learn**: Machine learning, including feature engineering and model training.
+- **XGBoost**: Gradient boosting for advanced predictive modeling.
+- **FastAPI**: Backend framework for deploying models as REST APIs.
+- **Sphinx**: Documentation generation tool.
+
 
 ## Conclusion
 By completing this project, we aim to provide valuable insights into the Airbnb market in Rio de Janeiro. The interactive application will serve as a practical tool for travelers to find their ideal accommodation based on data-driven analysis.
