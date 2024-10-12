@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-under_construction-yellow)
 
-This repository contains a refactored and modularized version of the original project developed in a Jupyter Notebook. The objective is to conduct a comprehensive analysis of the Airbnb dataset for Rio de Janeiro and to develop an interactive application that will assist travelers in finding their ideal accommodation.
+This repository contains a refactored and modularized version of the original project developed in a Jupyter Notebook. The objective is to conduct a comprehensive analysis of the Airbnb dataset for Rio de Janeiro and to develop an interactive application [streamlit-app](https://airbnb-rio.streamlit.app/) that will assist travelers in finding their ideal accommodation.
 
 ## 🚧 Project Status
 
