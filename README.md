@@ -115,7 +115,7 @@ Notebooks are used for exploratory analysis and model testing before modularizat
 - **`models.ipynb`**: Dedicated notebook for model experimentation.
 
 ## Interactive Application Development
-- Design and implement an [_interactive application_](https://github.com/MarBenitez/airbnb-rio-streamlit-app)
+- Design and implement an [_interactive application_](https://airbnb-rio.streamlit.app/)
 - Ensure a user-friendly interface and navigation
 - Integrate the EDA insights to help travelers
 - Provide filters and search functionality for accommodations
